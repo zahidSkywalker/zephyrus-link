@@ -1,0 +1,14 @@
+name: keeper
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+jobs:
+  keep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: run keeper
+        env:
+          GH_PAT: ${{ secrets.KEEPER_TOKEN }}
+        run: python3 scripts/keeper.py
