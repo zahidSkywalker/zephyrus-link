@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECHO // ZEPHYRUS DIGI ART</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%230d0d0d'/><path d='M4 3h8v2H6v2h5v2H6v2h6v2H4z' fill='%2300d4ff'/></svg>">
+</head>
+<body>
+<div class="scanlines"></div>
+
+<!-- ============ VAULT GATE ============ -->
+<div id="gate" class="gate">
+  <div class="gate-box">
+    <pre class="gate-logo">╔══════════════════════════════╗
+║  ECHO ▸ ZEPHYRUS  DIGI  ART  ║
+║        v1.0 · TERMINAL       ║
+╚══════════════════════════════╝</pre>
+    <p class="gate-sub">End-to-end encrypted image console.<br>Your passphrase derives the session key locally — it never leaves this browser.<br>The operator key only authenticates you to the relay; it is not an encryption key.</p>
+    <label class="gate-label" for="opkey">OPERATOR KEY · relay access</label>
+    <div class="gate-row">
+      <input id="opkey" type="password" autocomplete="off" spellcheck="false" placeholder="the access key Echo issued">
+    </div>
+    <label class="gate-label" for="psk">VAULT PASSPHRASE · encrypts everything</label>
+    <div class="gate-row">
+      <input id="psk" type="password" autocomplete="off" spellcheck="false" placeholder="a long passphrase only you know">
+      <button id="unlock" class="btn primary">UNLOCK</button>
+    </div>
+    <p class="gate-note" id="gateNote"></p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app hidden">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-bolt">↯</span>
+      <span class="brand-name">ZEPHYRUS <span class="dim">DIGI ART</span></span>
+      <span class="ver">v1.0</span>
+    </div>
+    <div class="topbar-actions">
+      <div id="statusBadge" class="badge offline">ENGINE OFFLINE</div>
+      <button id="wakeBtn" class="btn warn">WAKE ENGINE</button>
+      <button id="stopBtn" class="btn danger">STOP</button>
+      <button id="lockBtn" class="btn ghost" title="forget passphrase">LOCK</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- ============ CONSOLE ============ -->
+    <section class="console panel">
+      <div class="panel-title">// CONSOLE</div>
+
+      <label class="field-label">PROMPT</label>
+      <textarea id="prompt" class="ta" rows="5" placeholder="describe the image — cinematic, detailed, whatever you see"></textarea>
+
+      <label class="field-label">NEGATIVE <span class="dim">(ignored at CFG 1.0)</span></label>
+      <textarea id="neg" class="ta" rows="2" placeholder="blurry, low quality, watermark…"></textarea>
+
+      <div class="grid2">
+        <div>
+          <label class="field-label">SIZE</label>
+          <select id="size">
+            <option value="768x768">768 × 768 — square</option>
+            <option value="1024x1024" selected>1024 × 1024 — square</option>
+            <option value="1024x1280">1024 × 1280 — portrait</option>
+            <option value="1280x1024">1280 × 1024 — landscape</option>
+            <option value="1280x1280">1280 × 1280 — big square</option>
+            <option value="custom">custom…</option>
+          </select>
+        </div>
+        <div class="custom-size hidden" id="customSize">
+          <label class="field-label">W × H (mult. of 32)</label>
+          <div class="row">
+            <input id="w" class="inp" type="number" min="320" max="1920" step="32" value="1024">
+            <span class="dim">×</span>
+            <input id="h" class="inp" type="number" min="320" max="1920" step="32" value="1024">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div>
+          <label class="field-label">STEPS</label>
+          <input id="steps" class="inp" type="number" min="1" max="12" value="4">
+        </div>
+        <div>
+          <label class="field-label">CFG</label>
+          <input id="cfg" class="inp" type="number" min="1" max="10" step="0.5" value="1.0">
+        </div>
+        <div>
+          <label class="field-label">BATCH</label>
+          <input id="batch" class="inp" type="number" min="1" max="8" value="1">
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label class="field-label">SEED</label>
+          <div class="row">
+            <input id="seed" class="inp" type="text" placeholder="random" spellcheck="false">
+            <button id="rollSeed" class="btn ghost small" title="roll a random seed">RND</button>
+            <button id="clearSeed" class="btn ghost small" title="random each time">RST</button>
+          </div>
+        </div>
+        <div class="check-row">
+          <input id="lockSeed" type="checkbox"><label for="lockSeed">lock seed per batch</label>
+        </div>
+      </div>
+
+      <button id="gen" class="btn primary big">GENERATE ▸</button>
+
+      <div class="queuebox">
+        <div class="panel-subtitle">// QUEUE <span id="queueInfo" class="dim"></span></div>
+        <div id="queueList" class="queue-list"><div class="dim" id="queueEmpty">empty — engine idle</div></div>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section class="gallery-wrap panel">
+      <div class="panel-title row-between">
+        <span>// GALLERY <span id="galCount" class="dim"></span></span>
+        <span class="row-gap">
+          <button id="clearAll" class="btn danger small">CLEAR ALL</button>
+        </span>
+      </div>
+      <div id="gallery" class="gallery"></div>
+      <div id="galEmpty" class="gal-empty dim">generated images appear here — stored only in this browser (IndexedDB), never on a server</div>
+    </section>
+  </main>
+
+  <footer class="footbar">
+    <span class="dim">e2e aes-256-gcm</span>
+    <span class="dim">relay: blind postman</span>
+    <span class="dim">engine: dual T4 · juggernaut-z fast</span>
+    <span id="footStatus" class="dim"></span>
+  </footer>
+</div>
+
+<div id="toasts" class="toasts"></div>
+<div id="lightbox" class="lightbox hidden"><img id="lbImg" alt=""><div class="lb-bar"><span id="lbMeta" class="dim"></span><button id="lbClose" class="btn ghost small">CLOSE</button></div></div>
+
+<script src="app.js"></script>
+</body>
+</html>
