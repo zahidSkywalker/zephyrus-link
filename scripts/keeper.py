@@ -69,12 +69,12 @@ def main():
             print("cold, undesired — nothing to do")
         return
 
-    if state != "Running" and active:
+    if state not in ("Available", "Running") and active:
         r = api("POST", f"/repos/{REPO}/codespaces/{name}/start")
         print("start:", r.status_code)
         return
 
-    if state == "Running":
+    if state in ("Available", "Running"):
         # best-effort: bump the idle timeout each pass
         api("PATCH", f"/user/codespaces/{name}", json={"idle_timeout_minutes": 240})
         if not active:
