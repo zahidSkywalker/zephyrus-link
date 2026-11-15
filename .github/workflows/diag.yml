@@ -1,8 +1,6 @@
 name: diag
 on:
   workflow_dispatch: {}
-permissions:
-  contents: write
 jobs:
   diag:
     runs-on: ubuntu-latest
@@ -13,6 +11,9 @@ jobs:
           GH_TOKEN: ${{ secrets.KEEPER_TOKEN }}
         run: |
           {
+            echo "== ensure running =="
+            gh codespace start -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art || true
+            sleep 45
             echo "== codespace list =="
             gh codespace list -R zahidSkywalker/zephyrus-digi-art || true
             echo "== secrets present (count, values masked) =="
