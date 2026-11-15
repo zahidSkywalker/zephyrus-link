@@ -1,0 +1,38 @@
+name: diag
+on:
+  workflow_dispatch: {}
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: inspect relay codespace
+        env:
+          GH_TOKEN: ${{ secrets.KEEPER_TOKEN }}
+        run: |
+          {
+            echo "== codespace list =="
+            gh codespace list -R zahidSkywalker/zephyrus-digi-art || true
+            echo "== secrets present (count, values masked) =="
+            gh codespace ssh -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art -- \
+              'env | grep -cE "^(RELAY_AUTH|KAGGLE_USER|KAGGLE_TOKEN|KERNEL_SLUG|GH_LINK_TOKEN)=" || echo 0'
+            echo "== cloudflared =="
+            gh codespace ssh -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art -- \
+              'command -v cloudflared || echo NO-CLOUDFLARED'
+            echo "== relay log =="
+            gh codespace ssh -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art -- \
+              'tail -60 /tmp/zephyrus-relay.log 2>/dev/null || echo NO-RELAY-LOG'
+            echo "== node procs =="
+            gh codespace ssh -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art -- \
+              'ps aux | grep "node server.js" | grep -v grep || echo NO-NODE-PROC'
+            echo "== listening ports =="
+            gh codespace ssh -c sturdy-zebra-p7rx5r5w669f76qg -R zahidSkywalker/zephyrus-digi-art -- \
+              '(ss -tlnp 2>/dev/null || netstat -tlnp 2>/dev/null) | grep -E "7860|LISTEN" | head -10 || echo NO-LISTENER'
+          } > diag.txt 2>&1 || echo "diag crashed" > diag.txt
+      - name: commit diag
+        run: |
+          git config user.name echo-bot
+          git config user.email echo@zephyrus
+          git add diag.txt
+          git commit -m "relay diag" || exit 0
+          git push
