@@ -22,29 +22,29 @@ jobs:
           if [ -z "$CS" ]; then echo "NO-CODESPACE" > diag.txt; exit 0; fi
           {
             echo "== ssh probe =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'echo SSH-OK'
+            gh codespace ssh -c "$CS" -- 'echo SSH-OK'
             echo "ssh_rc=$?"
             echo "== secrets count =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'env | grep -cE "^(RELAY_AUTH|KAGGLE_USER|KAGGLE_TOKEN|KERNEL_SLUG|GH_LINK_TOKEN)=" || echo 0'
+            gh codespace ssh -c "$CS" -- 'env | grep -cE "^(RELAY_AUTH|KAGGLE_USER|KAGGLE_TOKEN|KERNEL_SLUG|GH_LINK_TOKEN)=" || echo 0'
             echo "rc=$?"
             echo "== node procs =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'ps aux | grep "node server.js" | grep -v grep || echo NO-NODE-PROC'
+            gh codespace ssh -c "$CS" -- 'ps aux | grep "node server.js" | grep -v grep || echo NO-NODE-PROC'
             echo "rc=$?"
             echo "== listening =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'ss -tlnp 2>/dev/null | grep 7860 || echo NO-LISTENER'
+            gh codespace ssh -c "$CS" -- 'ss -tlnp 2>/dev/null | grep 7860 || echo NO-LISTENER'
             echo "rc=$?"
             echo "== relay log =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'tail -40 /tmp/zephyrus-relay.log 2>/dev/null || echo NO-RELAY-LOG'
+            gh codespace ssh -c "$CS" -- 'tail -40 /tmp/zephyrus-relay.log 2>/dev/null || echo NO-RELAY-LOG'
             echo "rc=$?"
             echo "== repair attempt =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'bash .devcontainer/start_relay.sh'
+            gh codespace ssh -c "$CS" -- 'bash .devcontainer/start_relay.sh'
             echo "rc=$?"
             sleep 8
             echo "== relay log after repair =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'tail -40 /tmp/zephyrus-relay.log 2>/dev/null || echo NO-RELAY-LOG'
+            gh codespace ssh -c "$CS" -- 'tail -40 /tmp/zephyrus-relay.log 2>/dev/null || echo NO-RELAY-LOG'
             echo "rc=$?"
             echo "== listening after repair =="
-            gh codespace ssh -c "$CS" -R zahidSkywalker/zephyrus-digi-art -- 'ss -tlnp 2>/dev/null | grep 7860 || echo NO-LISTENER'
+            gh codespace ssh -c "$CS" -- 'ss -tlnp 2>/dev/null | grep 7860 || echo NO-LISTENER'
             echo "rc=$?"
           } > diag.txt 2>&1
           exit 0
