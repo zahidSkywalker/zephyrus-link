@@ -1,1 +1,24 @@
-diag crashed
+== ssh probe ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+ssh_rc=1
+== secrets count ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== node procs ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== listening ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== relay log ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== repair attempt ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== relay log after repair ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
+== listening after repair ==
+if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+rc=1
