@@ -1,24 +1,112 @@
 == ssh probe ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 ssh_rc=1
 == secrets count ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == node procs ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == listening ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == relay log ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == repair attempt ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == relay log after repair ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
 == listening after repair ==
-if any flags in the group [codespace repo] are set none of the others can be; [codespace repo] were all set
+error getting ssh server details: failed to start SSH server: 
+Please check if an SSH server is installed in the container.
+If the docker image being used for the codespace does not have an SSH server,
+install it in your Dockerfile or, for codespaces that use Debian-based images,
+you can add the following to your devcontainer.json:
+
+"features": {
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+}
+
 rc=1
